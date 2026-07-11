@@ -17,52 +17,81 @@ A pure **NumPy** implementation of Linear Regression trained with **Batch Gradie
 
 ---
 
-## Mathematical Model
+## Gradient Descent Visualization
 
-The prediction function is
+The animation below shows how Gradient Descent gradually updates the regression line until it converges to the true relationship between the data and the target.
 
-[
-\hat{y} = XW + b
-]
+![Gradient Descent](images/gradient_descent.gif)
+
+---
+
+## the algorithm
+
+Input Features (X)
+        │
+        ▼
+Prediction = X · W + b
+        │
+        ▼
+Compute Error (ŷ - y)
+        │
+        ▼
+Compute MSE Loss
+        │
+        ▼
+Compute Gradients
+        │
+        ▼
+Update W and b
+        │
+        ▼
+Repeat until convergence
+
+## Mathematical Background
+
+The model predicts the target using the equation:
+
+```text
+ŷ = X · W + b
+```
 
 where:
 
-* (X) is the feature matrix
-* (W) is the weight vector
-* (b) is the bias
-* (\hat{y}) is the predicted value
+* **X** : Feature matrix of shape `(n_samples, n_features)`
+* **W** : Weight vector of shape `(n_features, 1)`
+* **b** : Bias (scalar)
+* **ŷ** : Predicted values
 
-The model minimizes the Mean Squared Error:
+The loss function is the **Mean Squared Error (MSE)**:
 
-[
-J(W,b)=\frac{1}{2m}\sum_{i=1}^{m}(\hat{y}_i-y_i)^2
-]
+```text
+J(W, b) = (1 / (2m)) * Σ (ŷᵢ - yᵢ)²
+```
 
-The gradients are
+where:
 
-[
-\frac{\partial J}{\partial W}
-=============================
+* `m` is the number of training samples.
+* `ŷᵢ` is the prediction for sample `i`.
+* `yᵢ` is the true target value.
 
-\frac{1}{m}X^T(\hat{y}-y)
-]
+The gradients are:
 
-[
-\frac{\partial J}{\partial b}
-=============================
+```text
+dJ/dW = (1 / m) * Xᵀ(ŷ - y)
 
-\frac{1}{m}\sum_{i=1}^{m}(\hat{y}_i-y_i)
-]
+dJ/db = (1 / m) * Σ(ŷ - y)
+```
 
-The parameters are updated using Gradient Descent:
+Gradient Descent updates the parameters using:
 
-[
-W := W-\alpha\frac{\partial J}{\partial W}
-]
+```text
+W = W - α * dJ/dW
 
-[
-b := b-\alpha\frac{\partial J}{\partial b}
-]
+b = b - α * dJ/db
+```
+
+where **α** is the learning rate.
+
 
 ---
 
@@ -83,13 +112,6 @@ predictions = model.predict(X)
 
 ---
 
-## Gradient Descent Visualization
-
-The animation below shows how Gradient Descent gradually updates the regression line until it converges to the true relationship between the data and the target.
-
-![Gradient Descent](images/gradient_descent.gif)
-
----
 
 ## Example Dataset
 
